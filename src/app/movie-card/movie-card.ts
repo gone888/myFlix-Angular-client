@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FetchApiData } from '../fetch-api-data.service';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { GenreView } from '../genre-view/genre-view';
 import { MovieDetailsView } from '../movie-details-view/movie-details-view';
@@ -14,7 +15,13 @@ import { DirectorView } from '../director-view/director-view';
 })
 export class MovieCard implements OnInit {
   movies: any[] = [];
-  constructor(public fetchApiData: FetchApiData, public dialog: MatDialog, public router: Router) {}
+  user: any = {};
+  constructor(
+    public fetchApiData: FetchApiData,
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getMovies();
@@ -25,11 +32,18 @@ export class MovieCard implements OnInit {
     if (!currentUser) {
       this.router.navigate(['welcome']);
     }
-    this.fetchApiData.getAllMovies().subscribe((resp: any) => {
-      this.movies = resp;
-      console.log(this.movies);
-      return this.movies;
-    });
+    this.fetchApiData.getAllMovies().subscribe(
+      (result: any) => {
+        this.movies = result;
+        console.log(this.movies);
+        return this.movies;
+      },
+      (result) => {
+        this.snackBar.open('Error ' + result, 'OK', {
+          duration: 2000,
+        });
+      }
+    );
   }
 
   // Genre view
@@ -60,6 +74,33 @@ export class MovieCard implements OnInit {
   addToFavorites(movieID: any): void {
     const currentUser: any = localStorage.getItem('user');
     const user: any = JSON.parse(currentUser);
-    this.fetchApiData.addToFavorites(user.Username, movieID).subscribe((resp: any) => {});
+    function checkIfMovieAlreadyExists(FavoriteMovies: any[], movieID: any) {
+      for (let i = 0; i < user.FavoriteMovies.length; i++) {
+        if (user.FavoriteMovies[i] === movieID) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    if (checkIfMovieAlreadyExists(this.user.FavoriteMovies, movieID) === true) {
+      this.snackBar.open('Movie is already in favorites ', 'OK', {
+        duration: 2000,
+      });
+    } else {
+      this.fetchApiData.addToFavorites(user.Username, movieID).subscribe(
+        (result: any) => {
+          console.log(result);
+          this.snackBar.open('Movie added to favorites ', 'OK', {
+            duration: 2000,
+          });
+        },
+        (result) => {
+          this.snackBar.open('Error ' + result, 'OK', {
+            duration: 2000,
+          });
+        }
+      );
+    }
   }
 }
