@@ -1,0 +1,92 @@
+<div class="profile-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Profile</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form>
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            [(ngModel)]="user.Username"
+            placeholder="Username"
+            type="text"
+            name="Username"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [(ngModel)]="user.Password"
+            type="password"
+            placeholder="Password"
+            name="Password"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Birthday</mat-label>
+          <input
+            matInput
+            [(ngModel)]="Birthday"
+            placeholder="Birthday"
+            type="text"
+            onfocus="this.type='date'"
+            onblur="this.type='text'"
+            name="Birthday"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            [(ngModel)]="user.Email"
+            type="email"
+            placeholder="Email"
+            name="Email"
+            required
+          />
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="updateUser()" color="primary">Update</button>
+      <button mat-raised-button (click)="deleteUserAccount()" color="primary">
+        Delete Account
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div class="favorite-movies-container">
+  <mat-card>
+    <h2 id="favorite-movies-title">Favorite Movies</h2>
+    <p *ngIf="favoriteMovies.length < 1">No Favorite Movies</p>
+    <div class="movie-grid">
+      <mat-card *ngFor="let movie of favoriteMovies; let i = index" class="movie-card">
+        <mat-card-header style="height: 10%">
+          <mat-card-title>
+            {{ movie.Title }}
+          </mat-card-title>
+        </mat-card-header>
+        <img style="width: 100%; height: 80%; object-fit: contain" src="{{ movie.ImagePath }}" />
+        <mat-card-actions>
+          <button mat-raised-button (click)="openGenreView(movie.Genre)" color="primary">
+            Genre
+          </button>
+          <button mat-raised-button (click)="openDirectorView(movie.Director)" color="primary">
+            Director
+          </button>
+          <button mat-raised-button (click)="openMovieDetailsView(movie)" color="primary">
+            Movie Details
+          </button>
+          <button mat-raised-button (click)="removeFromFavorites(movie._id)" color="primary">
+            Remove From Favorites
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-card>
+</div>

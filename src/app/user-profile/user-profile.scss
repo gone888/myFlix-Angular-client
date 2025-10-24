@@ -1,3 +1,29 @@
+.profile-container {
+  width: auto;
+  display: grid;
+  text-align: center;
+  margin: 0 auto;
+
+  mat-card-header {
+    text-align: center;
+    margin: auto;
+  }
+
+  mat-card-content {
+    margin-top: 20px;
+  }
+
+  mat-card-actions {
+    width: auto;
+    display: flex;
+    gap: 10px;
+    margin: 0 auto;
+  }
+  button {
+    color: black;
+  }
+}
+
 .movie-grid {
   display: grid;
   grid: auto / 50% 50%;
@@ -8,11 +34,14 @@
   font-size: larger;
 }
 
+#favorite-movies-title {
+  text-align: center;
+}
+
 .movie-card {
   mat-card-actions {
     width: auto;
     display: flex;
-    justify-content: center;
     gap: 10px;
     margin: 0 auto;
   }
