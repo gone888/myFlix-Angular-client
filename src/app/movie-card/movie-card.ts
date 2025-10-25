@@ -27,6 +27,10 @@ export class MovieCard implements OnInit {
     this.getMovies();
   }
 
+  /**
+   * Function that fetches a list of all movies from the database
+   * @returns Array of movies
+   */
   getMovies(): void {
     const currentUser: any = localStorage.getItem('user');
     if (!currentUser) {
@@ -46,7 +50,10 @@ export class MovieCard implements OnInit {
     );
   }
 
-  // Genre view
+  /**
+   * This is a function will open a dialog giving users more information on the details of the genre of a particular movie
+   * @param genre
+   */
   openGenreView(genre: any): void {
     this.dialog.open(GenreView, {
       width: '300px',
@@ -54,7 +61,10 @@ export class MovieCard implements OnInit {
     });
   }
 
-  // Director view
+  /**
+   * This is a function will open a dialog giving users more information on the details of the director of a particular movie
+   * @param director
+   */
   openDirectorView(director: any): void {
     this.dialog.open(DirectorView, {
       width: '300px',
@@ -62,7 +72,10 @@ export class MovieCard implements OnInit {
     });
   }
 
-  // Movie details view
+  /**
+   * This is a function will open a dialog giving users more information on the details of a particular movie
+   * @param movie
+   */
   openMovieDetailsView(movie: any): void {
     this.dialog.open(MovieDetailsView, {
       width: '300px',
@@ -70,7 +83,11 @@ export class MovieCard implements OnInit {
     });
   }
 
-  // Add to Favorites
+  /**
+   * Function to add movie to favoritemovies array
+   * @param movieID
+   * @returns true or false
+   */
   addToFavorites(movieID: any): void {
     const currentUser: any = localStorage.getItem('user');
     const user: any = JSON.parse(currentUser);
@@ -83,6 +100,13 @@ export class MovieCard implements OnInit {
       return false;
     }
 
+    /**
+     * Function to check if the movie is already in the users favorites list
+     * @param movieID
+     * @param this.user.FavoriteMovies
+     * if it is alert the user that the movie is already in their favorites
+     * else add the movie to their FavoriteMovies
+     */
     if (checkIfMovieAlreadyExists(this.user.FavoriteMovies, movieID) === true) {
       this.snackBar.open('Movie is already in favorites ', 'OK', {
         duration: 2000,

@@ -30,7 +30,10 @@ export class UserProfile implements OnInit {
     this.getUserData();
   }
 
-  // Get user info
+  /**
+   * Function that requests user data from the api
+   * @returns an object containing the users information
+   */
   getUserData(): void {
     const currentUser: any = localStorage.getItem('user');
     const user: any = JSON.parse(currentUser);
@@ -58,7 +61,10 @@ export class UserProfile implements OnInit {
     );
   }
 
-  // Update user info
+  /**
+   * Function that updates the users information
+   * @returns an object containing the users updated information
+   */
   updateUser(): void {
     this.fetchApiData.updateUserInfo(this.Username, this.user).subscribe(
       (resp: any) => {
@@ -78,7 +84,10 @@ export class UserProfile implements OnInit {
     );
   }
 
-  // Delete user account
+  /**
+   * Function that deletes the users account
+   * @returns confirmation message letting the user know if their account was successfully deleted or not
+   */
   deleteUserAccount(): void {
     this.fetchApiData.deleteUser(this.Username).subscribe(
       (resp: any) => {
@@ -95,7 +104,10 @@ export class UserProfile implements OnInit {
     );
   }
 
-  // Get favorite movies
+  /**
+   * Get a list of the users favorite movies
+   * @returns an array of the users favorite movies
+   */
   getFavoriteMovies(): void {
     this.fetchApiData.getAllMovies().subscribe(
       (resp: any) => {
@@ -114,7 +126,10 @@ export class UserProfile implements OnInit {
     );
   }
 
-  // Genre view
+  /**
+   * This is a function will open a dialog giving users more information on the details of the genre of a particular movie
+   * @param genre
+   */
   openGenreView(genre: any): void {
     this.dialog.open(GenreView, {
       width: '300px',
@@ -122,7 +137,10 @@ export class UserProfile implements OnInit {
     });
   }
 
-  // Director view
+  /**
+   * This is a function will open a dialog giving users more information on the details of the director of a particular movie
+   * @param director
+   */
   openDirectorView(director: any): void {
     this.dialog.open(DirectorView, {
       width: '300px',
@@ -130,7 +148,10 @@ export class UserProfile implements OnInit {
     });
   }
 
-  // Movie details view
+  /**
+   * This is a function will open a dialog giving users more information on the details of a particular movie
+   * @param movie
+   */
   openMovieDetailsView(movie: any): void {
     this.dialog.open(MovieDetailsView, {
       width: '300px',
@@ -138,7 +159,11 @@ export class UserProfile implements OnInit {
     });
   }
 
-  // Remove movie from favorites
+  /**
+   * Get a list of the users favorite movies
+   * @param movidID
+   * @returns confirmation message indicating whether the movie has successfully or unsuccessfully been removed from the users favorites list
+   */
   removeFromFavorites(movidID: string): void {
     let movieID = movidID;
     console.log(movieID);
