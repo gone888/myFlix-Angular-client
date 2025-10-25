@@ -6,7 +6,7 @@ This project was generated using Angular CLI version 20.3.6.
 
 This is the frontend side of my myFlix project built using angular which is an application for viewing details about movies.
 
-## Technology used:
+## Technology used
 
 - Angular
 - Node.js
